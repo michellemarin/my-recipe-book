@@ -3,8 +3,10 @@ App = Ember.Application.create({
 }
 );
 
+App.Firebase = new Firebase('https://flickering-torch-3666.firebaseio.com/');
+
 App.ApplicationAdapter = DS.FirebaseAdapter.extend({
-  firebase: new Firebase('https://flickering-torch-3666.firebaseio.com/')
+  firebase: App.Firebase
 });
 
 App.CATEGORIES = [
