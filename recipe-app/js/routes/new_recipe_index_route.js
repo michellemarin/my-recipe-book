@@ -1,5 +1,5 @@
 App.NewRecipeIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('ingredient');
-    }
+  model: function () {
+    return this.store.find('ingredient');
+  }
 });

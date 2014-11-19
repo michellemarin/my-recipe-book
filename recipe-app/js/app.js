@@ -7,6 +7,16 @@ App.ApplicationAdapter = DS.FirebaseAdapter.extend({
   firebase: new Firebase('https://flickering-torch-3666.firebaseio.com/')
 });
 
+App.CATEGORIES = [
+  {id: '1', name: 'Breakfast'},
+  {id: '2', name: 'Lunch'},
+  {id: '3', name: 'Snack'},
+  {id: '4', name: 'Supper'},
+  {id: '5', name: 'Dessert'},
+  {id: '6', name: 'cocktail'},
+  {id: '7', name: 'fancy pants'}
+];
+
 
 $("#myForm").validate( {
   rules: {
@@ -14,6 +24,9 @@ $("#myForm").validate( {
       required: true
     },
     description: {
+      required: true
+    },
+    category: {
       required: true
     },
     imgURL: {

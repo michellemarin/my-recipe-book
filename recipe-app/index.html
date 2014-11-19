@@ -56,7 +56,7 @@
         <label for="imgURL">imgURL</label>
         {{input type="text" value=imgURL id="imgURL" class="form-control"}}
       </div>
-      <button {{action "save"}}>Create a New Ingredient</button>
+      <button {{action "save"}} class="btn btn-primary">Create a New Ingredient</button>
     </form>
   </script>
 
@@ -69,6 +69,10 @@
       <div class="form-group">
         <label for="description">Description</label>
         {{input type="text" value=description id="description" class="form-control"}}
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        {{view "select" value=category content=App.CATEGORIES optionValuePath="content.id" optionLabelPath="content.name" classNames="form-control"}}
       </div>
       <div class="form-group">
         <label for="image">image (url)</label>
@@ -97,6 +101,10 @@
         {{input type="text" value=description id="description" class="form-control"}}
       </div>
       <div class="form-group">
+        <label for="category">Category</label>
+        {{input type="text" value=category id="category" class="form-control"}}
+      </div>
+      <div class="form-group">
         <label for="image">image (url)</label>
         {{input type="text" value=imgURL id="image" class="form-control"}}
       </div>
@@ -110,32 +118,83 @@
       </div>
       <button {{action "update"}} class="btn btn-primary">Update Recipe</button>
     </form>
+    <h2>{{title}}</h2>
+    {{markedDescription}}
   </script>
 
   <script type="text/x-handlebars" id="recipe">
-    <h2>{{title}}</h2>
+    <h2> {{title}} </h2>
+    <h4> {{categoryName}} </h4>
 
-    <img {{bind-attr src=imgURL }} style="width: 50%" />
-    <p>{{description}}</p>
+    {{category}}
 
-    <h4>Ingredients</h4>
+    <img {{bind-attr src=imgURL }} style="width: 50%" /><br />
+
+    {{{markedDescription}}}
+
+
+    <h4 {{action 'toggleItems' on 'click'}}>
+    {{itemCount}} Ingredients <i {{bind-attr class=':glyphicon showItems:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
+
+    </h4>
+    {{#if showItems}}
     <ul>
     {{#each item in splitItems}}
     <li>{{item}}</li>
     {{/each}}
     </ul>
+    {{/if}}
 
-    <h4>Steps</h4>
+    <h4 {{action 'toggleSteps' on 'click'}}>
+    {{stepCount}} Steps <i {{bind-attr class=':glyphicon showSteps:glyphicon-chevron-down:glyphicon-chevron-up'}}></i>
+
+    </h4>
+    {{#if showSteps}}
+
+    {{splitSteps.length}}
       <ol>
         {{#each step in splitSteps}}
           <li>{{step}}</li>
         {{/each}}
       </ol>
+      {{/if}}
     {{link-to "Edit" "edit_recipe" this classNames="btn btn-primary"}}
     <button {{action "destroy"}} class="btn btn-danger">Delete Recipe</button>
   </script>
 
+  <script type="text/x-handlebars" id="category">
+  <ul>
+    <li>{{link-to "Show All" "category" (query-params category="all")}}</li>
+
+  {{#each App.CATEGORIES}}
+
+    <li>{{#link-to "category" (query-params category=id)}} Show Only {{name}} {{/link-to}} </li>
+
+  {{/each}}
+
+  </ul>
+
+  {{#if filteredRecipes.length }}
+
+  <h2>{{filteredRecipes.length}} Recipe{{#if moreThanOneFound}}s{{/if}} Found</h2>
+
+  {{else}}
+
+  <h2>Sorry No Recipes Here</h2>
+
+  {{/if}}
+
+  <ul>
+    {{#each filteredRecipes}}
+      <li>
+      {{#link-to "recipe" this tagName="h2"}} {{title}} {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+  </script>
+
   <script type="text/x-handlebars" id="index">
+  <a {{action "sortToggle"}}>Switch Sorting</a>
     <ul>
       {{#each}}
       <li>
@@ -163,6 +222,7 @@
   <script src="js/models/ingredients.js"></script>
   <script src="js/models/recipe.js"></script>
   <script src="js/routes/edit_recipe_route.js"></script>
+  <script src="js/routes/category_route.js"></script>
   <script src="js/routes/index_route.js"></script>
   <script src="js/routes/ingredient_route.js"></script>
   <script src="js/routes/ingredients_route.js"></script>
