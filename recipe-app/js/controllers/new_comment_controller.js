@@ -6,6 +6,7 @@ App.RecipeNewCommentController = Ember.ObjectController.extend({
   needs: ['recipe'],
   actions: {
     save: function () {
+      console.log('save click comment');
       if (!this.get('text')) { return; }
         var comment = this.store.createRecord('comment', {
           name: this.get('name'),

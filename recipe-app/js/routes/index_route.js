@@ -9,6 +9,12 @@ App.IndexController = Ember.ArrayController.extend({
   actions: {
     sortToggle: function () {
       this.set('sortAscending', !this.get('sortAscending'));
+    },
+    upvote: function (recipe) {
+      recipe.incrementProperty('rank');
+    },
+    downvote: function (recipe) {
+      recipe.decrementProperty('rank');
     }
   }
 });
