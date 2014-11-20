@@ -1,4 +1,7 @@
 App.RecipeController = Ember.ObjectController.extend({
+  needs: ['application'],
+  isLoggedIn: Ember.computed.alias('controllers.application.isLoggedIn'),
+
   itemCount: Ember.computed.alias('splitItems.length'),
   stepCount: Ember.computed.alias('splitSteps.length'),
 
@@ -31,9 +34,11 @@ App.RecipeController = Ember.ObjectController.extend({
       this.toggleProperty('showItems');
     },
     destroy: function () {
-      this.get('model').deleteRecord();
-      this.get('model').save();
-      this.transitionToRoute('index');
+      if (confirm('Are you sure you want to delete this recipe?')) {
+        this.get('model').deleteRecord();
+        this.get('model').save();
+        this.transitionToRoute('index');
+      }
     }
   }
 });

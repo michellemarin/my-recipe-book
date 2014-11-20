@@ -169,8 +169,10 @@
         {{/each}}
       </ol>
       {{/if}}
-    {{link-to "Edit" "edit_recipe" this classNames="btn btn-primary"}}
-    <button {{action "destroy"}} class="btn btn-danger">Delete Recipe</button>
+      {{#if isLoggedIn}}
+        {{link-to "Edit" "edit_recipe" this classNames="btn btn-primary"}}
+        <button {{action "destroy"}} class="btn btn-danger">Delete Recipe</button>
+      {{/if}}  
   </script>
 
   <script type="text/x-handlebars" id="category">

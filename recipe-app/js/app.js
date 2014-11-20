@@ -19,6 +19,12 @@ App.CATEGORIES = [
   {id: '7', name: 'fancy pants'}
 ];
 
+App.RecipeFormComponent = Ember.Component.extend({
+  markedDescription: function () {
+    return marked((this.get('recipe description')) || '');
+  }.property('recipe.description')
+});
+
 
 $("#myForm").validate( {
   rules: {
