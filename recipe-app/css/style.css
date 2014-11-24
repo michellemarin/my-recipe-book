@@ -54,6 +54,7 @@ article {
 li {
   color: #3A3A3A;
   list-style: left;
+  list-style-type: none;
 }
 
 .nav li {

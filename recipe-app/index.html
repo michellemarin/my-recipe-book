@@ -144,14 +144,17 @@
         {{link-to "Edit" "edit_recipe" this classNames="btn btn-primary"}}
         {{yield}}
       {{/if}}
-      <h2>Comments {{comments.length}}</h2>
+      <h2>{{comments.length}} Comments </h2>
         {{#each comments}}
-          <p>{{date}}</p>
+        <div style="border-top: solid 1px #706E6F">
+        
+          <p><strong>{{name}}</strong> | <i>{{date}}</i></p>
           <p>{{{markedText}}}</p>
-          <p>by {{name}}</p>
+          </div>
+
         {{/each}}
         {{outlet}}
-        <hr>
+
         {{link-to "New Comment" "recipe.new_comment" this.id class="btn btn-primary"}}
         {{/with}}
       </script>
@@ -174,13 +177,17 @@
         {{input value=name id="name" class="form-control"}}
       </div>
       <div class="form-group">
+        <label for="email">Email:</label>
+        {{input type="email" value=email id="email" class="form-control" placeholder="Enter your Gravatar e-mail"}}
+      </div>
+
+      <div class="form-group">
         <label for="text">Feedback:</label>
         {{input value=text class="form-control"}}
       </div>
       <button class="btn btn-primary" {{action "save"}}>Add Comment</button>
     </form>
   </script>
-
 
 
   <script type="text/x-handlebars" id="category">
@@ -215,16 +222,19 @@
   </script>
 
   <script type="text/x-handlebars" id="index">
-  <a {{action "sortToggle" "title"}}>Toggle by Alphabetical Order</a>
-  <a {{action "sortToggle" "rank"}}>Toggle by Recipe Popularity Rank</a>
+  <button class="btn btn-primary" {{action "sortToggle" "title"}}>Sort Alphabetically</button>
+  <button class="btn btn-primary" {{action "sortToggle" "rank"}}>Sort by Rank</button>
     <ul>
     {{#each}}
       <li>
         <h2>
-        <i class="glyphicon glyphicon-chevron-up" {{action "upvote" this }}></i>
         {{#link-to "recipe" this }} {{rank}} {{title}} {{/link-to}}
-        <i class="glyphicon glyphicon-chevron-down" {{action "downvote" this }}></i>
         </h2>
+        <p> Vote up or down
+        <i class="glyphicon glyphicon-chevron-up" {{action "upvote" this }}></i>
+        <i class="glyphicon glyphicon-chevron-down" {{action "downvote" this }}></i>
+        </p>
+
       </li>
     {{/each}}
     </ul>

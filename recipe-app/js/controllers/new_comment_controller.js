@@ -10,6 +10,7 @@ App.RecipeNewCommentController = Ember.ObjectController.extend({
       if (!this.get('text')) { return; }
         var comment = this.store.createRecord('comment', {
           name: this.get('name'),
+          email: this.get('email'),
           date: (new Date()).toDateString(),
           text: this.get('text')
         });
